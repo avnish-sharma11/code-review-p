@@ -20,10 +20,26 @@ function App() {
     prism.highlightAll()
   }, [])
 
-  async function reviewCode() {
-    const response = await axios.post('https://code-reviewer-lk64.onrender.com/ai/get-review', { code })
+async function reviewCode() {
+  try {
+    const response = await axios.post(
+      'https://code-reviewer-lk64.onrender.com/ai/get-review',
+      {
+        code: code   // sending editor code to backend
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    console.log('response:', response.data)
     setReview(response.data)
+  } catch (error) {
+    console.error(error)
   }
+}
 
   return (
     <>
